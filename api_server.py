@@ -81,7 +81,6 @@ async def generate(request: Request) -> Response:
             text_outputs = [prompt + output.text for output in request_output.outputs]
             ret = {
                 "generated_text": text_outputs,
-                "status": 200,
             }
             yield (json.dumps(ret) + "\0").encode("utf-8")
 
@@ -107,10 +106,9 @@ async def generate(request: Request) -> Response:
     prompt = final_output.prompt
     text_outputs = [prompt + output.text for output in final_output.outputs]
     ret = {
-        "generated_text": text_outputs,
-        "status": 200,
+        "generated_text": text_outputs[0],
     }
-    return ret
+    return JSONResponse(content=ret)
 
 
 if __name__ == "__main__":
