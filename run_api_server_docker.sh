@@ -5,7 +5,7 @@ MODEL_NAME_OR_PATH=$1
 docker run \
 --gpus all \
 --rm \
---shm-size=8g \
+--shm-size=20g \
 -p 8000:8000 \
 -v $(pwd):/app \
 -v $MODEL_NAME_OR_PATH:/model_repo \

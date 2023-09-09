@@ -65,6 +65,7 @@ async def generate(request: Request) -> Response:
 
     if new_parameters.get("temperature", 0.0) <= 0.0:
         new_parameters["top_k"] = 1  # greedy sampling
+        new_parameters["top_p"] = 1  # greedy sampling
 
     sampling_params = SamplingParams(**new_parameters)
 

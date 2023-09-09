@@ -1,1 +1,4 @@
 vllm==0.1.6
+ray==2.5.1
+typing-inspect==0.8.0
+typing_extensions==4.5.0
