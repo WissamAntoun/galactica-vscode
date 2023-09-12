@@ -8,6 +8,6 @@ Content-Type: application/json
   "inputs": "The Transformer architecture [START_REF]",
   "parameters": {
     "temperature": 0.9,
-    "max_new_tokens": 10
+    "max_new_tokens": 100
   }
 }
