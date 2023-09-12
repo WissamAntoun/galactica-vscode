@@ -6,7 +6,9 @@ Use this extension mainly to write latex documents with code completion using th
 
 Follow the instructions on the [VLLM Docs](https://vllm.readthedocs.io/en/latest/getting_started/installation.html) to install the VLLM server.
 
-Then install the extension from the [VSCode Marketplace](https://marketplace.visualstudio.com/items?itemName=HuggingFace.huggingface-vscode).
+Then install the VSCode extension that only supports `latex` files then get it from [here](https://github.com/WissamAntoun/huggingface-vscode) go there and download the latest `.vsix` file and install it.
+
+Or if you're planning to use the Hugging Face Code for everything then get it from the [VSCode Marketplace](https://marketplace.visualstudio.com/items?itemName=HuggingFace.huggingface-vscode)
 
 ## Model Download
 
