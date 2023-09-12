@@ -1,10 +1,11 @@
 MODEL_NAME_OR_PATH=$1
 
 python api_server.py \
-    --host 0.0.0.0 \
-    --port 8000 \
-    --model $MODEL_NAME_OR_PATH \
-    --dtype half
+--host 0.0.0.0 \
+--port 8000 \
+--model $MODEL_NAME_OR_PATH \
+--worker-use-ray \
+--dtype half
 
 
 # usage: api_server.py [-h] [--host HOST] [--port PORT] [--model MODEL] [--tokenizer TOKENIZER] [--tokenizer-mode {auto,slow}] [--trust-remote-code] [--download-dir DOWNLOAD_DIR]
