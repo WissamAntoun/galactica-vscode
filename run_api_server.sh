@@ -5,7 +5,8 @@ python api_server.py \
 --port 8000 \
 --model $MODEL_NAME_OR_PATH \
 --worker-use-ray \
---dtype half
+--dtype half \
+--do_cache
 
 
 # usage: api_server.py [-h] [--host HOST] [--port PORT] [--model MODEL] [--tokenizer TOKENIZER] [--tokenizer-mode {auto,slow}] [--trust-remote-code] [--download-dir DOWNLOAD_DIR]

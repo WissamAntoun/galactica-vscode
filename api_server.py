@@ -24,6 +24,7 @@ TIMEOUT_KEEP_ALIVE = 5  # seconds.
 TIMEOUT_TO_PREVENT_DEADLOCK = 1  # seconds.
 app = FastAPI()
 engine = None
+do_cache = False
 
 PARAMETERS_MAPPING = {
     "temperature": "temperature",
@@ -57,13 +58,13 @@ def generate_key_builder(
     kwargs: Dict[str, Any],
 ) -> str:
     cache_key = hashlib.md5(  # noqa: S324
-        f"{func.__module__}:{func.__name__}:{args[1:3]}:{kwargs}".encode()
+        f"{func.__module__}:{func.__name__}:{args[1:]}:{kwargs}".encode()
     ).hexdigest()
     return f"{namespace}:{cache_key}"
 
 
 @cache(expire=60 * 60)
-async def _generate(request, inputs, sampling_params, stream):
+async def _generate(request, inputs, sampling_params, stream, cache_key):
     request_id = random_uuid()
 
     results_generator = engine.generate(inputs, sampling_params, request_id)
@@ -138,7 +139,11 @@ async def generate(request: Request) -> Response:
     # left for the future, but unused in the extension
     stream = request_dict.pop("stream", False)
 
-    ret = await _generate(request, inputs, sampling_params, stream)
+    if do_cache:
+        cache_key = 1
+    else:
+        cache_key = random_uuid()
+    ret = await _generate(request, inputs, sampling_params, stream, cache_key)
 
     return JSONResponse(content=ret)
 
@@ -147,8 +152,12 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--host", type=str, default="localhost")
     parser.add_argument("--port", type=int, default=8000)
+    parser.add_argument("--do_cache", action="store_true")
     parser = AsyncEngineArgs.add_cli_args(parser)
     args = parser.parse_args()
+
+    if args.do_cache:
+        do_cache = True
 
     FastAPICache.init(
         InMemoryBackend(),
